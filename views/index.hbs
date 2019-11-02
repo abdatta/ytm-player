@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{query}} - Youtube Music Search</title>
+        <style>
+            li {
+                display: flex;
+            }
+            li > div {
+                display: flex;
+                flex-flow: column;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <input type="text" id="search">
+            <button onclick="search()">Search</button>
+        </div>
+        <ul>
+            {{#each results}}
+                <li>
+                    <img src="{{this.thumbnails.default.url}}">
+                    <div>
+                        {{this.title}}
+                        <button>Play</button>
+                    </div>
+                </li>
+            {{/each}}
+        </ul>
+
+    </body>
+    <script>
+        const input = document.getElementById('search');
+        const search = () => {
+            const query = input.value;
+            console.log(query);
+            window.location = window.location.origin + '/?q=' + encodeURIComponent(query);
+        }
+        input.addEventListener('keyup', (event) => {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                search();
+            }
+        });
+    </script>
+</html>
