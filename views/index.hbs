@@ -5,10 +5,13 @@
         <style>
             li {
                 display: flex;
+                align-items: center;
             }
             li > div {
                 display: flex;
                 flex-flow: column;
+                cursor: pointer;
+                text-decoration: underline;
             }
         </style>
     </head>
@@ -18,17 +21,18 @@
             <button onclick="search()">Search</button>
         </div>
         <ul>
+            <div id="curr_play" hidden></div>
+            <audio id="player" controls loop hidden></audio>
+            <br><br>
             {{#each results}}
                 <li>
                     <img src="{{this.thumbnails.default.url}}">
-                    <div>
+                    <div onclick="play('{{this.link}}', '{{this.title}}')">
                         {{this.title}}
-                        <button>Play</button>
                     </div>
                 </li>
             {{/each}}
         </ul>
-
     </body>
     <script>
         const input = document.getElementById('search');
@@ -43,5 +47,14 @@
                 search();
             }
         });
+        const player = document.getElementById('player');
+        const curr_play =document.getElementById('curr_play');
+        const play = (url, title) => {
+            player.src = url;
+            player.play();
+            player.removeAttribute('hidden');
+            curr_play.removeAttribute('hidden');
+            curr_play.innerHTML = "<b>Currently playing:</b> " + title;
+        }
     </script>
 </html>
