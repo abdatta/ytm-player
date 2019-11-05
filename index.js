@@ -1,7 +1,18 @@
 require('dotenv').config();
 
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
+
+const globalTunnel = require('global-tunnel-ng');
+
+// in case of proxy requirements
+if (process.env.HTTP_PROXY && process.env.HTTP_PROXY.toLowerCase() === 'true') {
+    globalTunnel.initialize({
+        host: process.env.HTTP_PROXY_HOST,
+        port: process.env.HTTP_PROXY_PORT,
+        proxyAuth: process.env.HTTP_PROXY_USER + ':' + process.env.HTTP_PROXY_PASS
+    });
+}
 
 const youtube = {
     search: require('youtube-search'),
@@ -18,7 +29,11 @@ app.get('/', (req, res) => {
       res.sendStatus(400);
       return;
   }
-  youtube.search(query, { key: process.env.YOUTUBE_API_KEY}, (err, results) => {
+  youtube.search(query, {
+      maxResults: 8,
+      type: 'video',
+      key: process.env.YOUTUBE_API_KEY
+    }, (err, results) => {
     if(err) {
         res.sendStatus(500);
         return console.log(err);
