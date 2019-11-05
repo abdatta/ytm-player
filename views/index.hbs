@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{{query}} - Youtube Music Search</title>
         <style>
             li {
@@ -16,11 +17,12 @@
         </style>
     </head>
     <body>
-        <div>
-            <input type="text" id="search">
-            <button onclick="search()">Search</button>
-        </div>
         <ul>
+            <div>
+                <input type="text" id="search">
+                <button onclick="search()">Search</button>
+            </div>
+            <br>
             <div id="curr_play" hidden></div>
             <audio id="player" controls loop hidden></audio>
             <br><br>
