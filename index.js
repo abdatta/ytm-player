@@ -59,7 +59,7 @@ app.get('/play', (req, res) => {
         res.sendStatus(400);
         return;
     }
-    youtube.stream(url).pipe(res);
+    youtube.stream(url, { filter: 'audioonly' }).pipe(res);
 });
  
 app.listen(5000, () => console.log('Listening on port 5000.'));
